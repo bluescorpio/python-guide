@@ -1,0 +1,78 @@
+diff --git a/www/protected/models/CommandRun.php b/www/protected/models/CommandRun.php
+index 436e3d1..df625cb 100644
+--- a/www/protected/models/CommandRun.php
++++ b/www/protected/models/CommandRun.php
+@@ -24,7 +24,7 @@ class CommandRun extends Model
+     public $result;
+     public $status;
+     public $timeout = 1440; //24*60 24hours
+-    public $sudoer = 'root';    
++    public $sudoer = 'admin';    
+     public $desc_info;
+     public $return_code;
+     public $build;
+diff --git a/www/protected/models/Job.php b/www/protected/models/Job.php
+index 3e23d69..fa3a615 100644
+--- a/www/protected/models/Job.php
++++ b/www/protected/models/Job.php
+@@ -20,7 +20,7 @@ class Job extends Model
+     public $machine_id;
+     public $stage_num;
+     public $timeout = 1440; //24*60 24hours
+-    public $sudoer = 'root';
++    public $sudoer = 'admin';
+     public $status = self::STATUS_AVAILABLE;
+     public $maxStageNum;
+     public $failed_repeat = 0;
+diff --git a/www/themes/classic/assets/js/job.form.js b/www/themes/classic/assets/js/job.form.js
+index 43c3581..835a3f3 100644
+--- a/www/themes/classic/assets/js/job.form.js
++++ b/www/themes/classic/assets/js/job.form.js
+@@ -533,7 +533,7 @@ var jobForm = function(){
+             $("#Command_parser_id").select2("val", "")
+             $("#Job_machine_id").val("")
+             $("#Job_machine_id_input").val("")
+-            $("#Job_sudoer").val("root")
++            $("#Job_sudoer").val("admin")
+             $("#Job_timeout").val("1440")
+             $("#Job_failed_repeat").val("0")
+             $("#Job_crucial_0").removeAttr("checked")
+diff --git a/www/themes/classic/views/command/view.php b/www/themes/classic/views/command/view.php
+index f548c63..a21a0c2 100755
+--- a/www/themes/classic/views/command/view.php
++++ b/www/themes/classic/views/command/view.php
+@@ -309,7 +309,7 @@
+     <div class="row-fluid">
+         <?php
+         echo CHtml::activeLabel($lastRunInfo, 'sudoer', array('class' => 'span2'));
+-        echo CHtml::activeTextField($lastRunInfo, 'sudoer', array('class' => 'focus span9'));
++        echo CHtml::activeTextField($lastRunInfo, 'sudoer', array('class' => 'focus span9', 'disabled' => 'disabled'));
+         ?>
+     </div>
+     <div class="row-fluid">
+diff --git a/www/themes/classic/views/task/_form.php b/www/themes/classic/views/task/_form.php
+index f612aa5..ece326b 100755
+--- a/www/themes/classic/views/task/_form.php
++++ b/www/themes/classic/views/task/_form.php
+@@ -116,7 +116,7 @@
+                 $this->Widget('application.extensions.timereditor.TimerEditorWidget', array(
+                         'model' => $task,
+                         'attribute' => 'cron_time',
+-                        'htmlOptions' => array('class' => 'focus span2'),
++                        'htmlOptions' => array('class' => 'focus span2', 'disabled' => 'disabled'),
+                 ));
+                 echo '<div class="offset1 span3 exclusive-checkbox">';
+                 echo CHtml::activeLabelEx($task, 'exclusive', array('style' => 'float: left; margin-right: 5px', 
+diff --git a/www/themes/classic/views/task/jobform.php b/www/themes/classic/views/task/jobform.php
+index 205f322..e6e35a0 100644
+--- a/www/themes/classic/views/task/jobform.php
++++ b/www/themes/classic/views/task/jobform.php
+@@ -338,7 +338,7 @@ echo CHtml::tag('div', array(
+     <div class="row-fluid">
+         <?php
+         echo CHtml::activeLabel($job, 'sudoer', array('class' => 'span2'));
+-        echo CHtml::activeTextField($job, 'sudoer', array('class' => 'focus span4'));
++        echo CHtml::activeTextField($job, 'sudoer', array('class' => 'focus span4', 'disabled' => 'disabled'));
+         echo CHtml::activeLabel($job, 'timeout', array('class' => 'span2'));
+         echo CHtml::activeTextField($job, 'timeout', array('class' => 'focus span3'));
+         echo CHtml::tag('label', array('class' => 'span1'), Yii::t('Run', 'Minutes'));
